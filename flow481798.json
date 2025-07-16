@@ -1,0 +1,109 @@
+{
+    "source": {
+        "name": "My.api.mockaroo.com - Customers",
+        "description": null,
+        "data_credentials": "<data_credentials_id: Dev Mockaroo Get Customers>",
+        "source_type": "rest",
+        "ingest_method": "POLL",
+        "source_config": {
+            "rest.iterations": [
+                {
+                    "iteration.type": "static.url",
+                    "method": "GET",
+                    "date.format": "yyyy-MM-dd",
+                    "date.time.unit": "dd",
+                    "key": "step1",
+                    "url.template": "https://my.api.mockaroo.com/dev/Customers",
+                    "response.data.path": "$[*]"
+                }
+            ],
+            "start.cron": "0 45 18 16 7 ? 2025"
+        },
+        "tags": []
+    },
+    "detected_dataset": {
+        "detected_dataset_1": {
+            "name": "1 - My.api.mockaroo.com - Customers",
+            "description": "DataSet #1 detected from My.api.mockaroo.com - Customers",
+            "data_source_id": "<data_source_id>",
+            "parent_data_set_id": null,
+            "source_schema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "format": "email",
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    },
+                    "ip_address": {
+                        "format": "ipv4",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    }
+                },
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "$schema-id": 1836366879
+            },
+            "tags": [],
+            "sharers": []
+        }
+    },
+    "dataset": {},
+    "sink": {
+        "sink_1": {
+            "name": "DEMO_DB - CUSTOMERS",
+            "sink_type": "snowflake",
+            "sink_config": {
+                "mapping": {
+                    "mapping": {
+                        "email": {
+                            "EMAIL": "TEXT"
+                        },
+                        "first_name": {
+                            "FIRST_NAME": "TEXT"
+                        },
+                        "gender": {
+                            "GENDER": "TEXT"
+                        },
+                        "id": {
+                            "ID": "DOUBLE PRECISION"
+                        },
+                        "ip_address": {
+                            "IP_ADDRESS": "TEXT"
+                        },
+                        "last_name": {
+                            "LAST_NAME": "TEXT"
+                        }
+                    },
+                    "mode": "manual",
+                    "tracker_mode": "RECORD",
+                    "tracker_name": "__nexla_tracker_id"
+                },
+                "insert.mode": "UPSERT",
+                "upsert.nulls": true,
+                "sink_type": "snowflake",
+                "table": "CUSTOMERS",
+                "database": "DEMO_DB",
+                "primary.key": "ID"
+            },
+            "data_set_id": "detected_dataset_1",
+            "tags": [],
+            "data_credentials": "<data_credentials_id: Dev DB>"
+        }
+    },
+    "data_maps": {},
+    "reusable_transforms": {},
+    "meta_data": {
+        "env": "dataops.nexla.io"
+    }
+}
